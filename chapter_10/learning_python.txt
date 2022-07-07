@@ -1,0 +1,2 @@
+In Python you can program all kinds of applications Pythons
+In Python you can create web-apps
