@@ -18,10 +18,10 @@ class Restaurant:
         self.number_served += number_served
 
 
-restaurant = Restaurant('Napoli', 'Italian food', 3)
-
-restaurant.describe_restaurant()
-restaurant.set_number_served(4)
-restaurant.describe_restaurant()
-restaurant.increment_number_served(50)
-restaurant.describe_restaurant()
+if __name__ == '__main__':
+    restaurant = Restaurant('Napoli', 'Italian food', 3)
+    restaurant.describe_restaurant()
+    restaurant.set_number_served(4)
+    restaurant.describe_restaurant()
+    restaurant.increment_number_served(50)
+    restaurant.describe_restaurant()

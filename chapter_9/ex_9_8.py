@@ -1,13 +1,24 @@
 # 9.8. Привилегии
-from ex_9_7 import Admin
+from ex_9_3 import User
 
 
-class Privileges:
-    def __init__(self, privileges):
-        self.privileges = privileges
+class Admin(User):
+    def __init__(self, first_name, last_name, *args, **kwargs):
+        super().__init__(first_name, last_name, *args, **kwargs)
+        self.privileges = Privileges()
 
     def show_privileges(self):
         print(self.privileges)
 
 
-permissions = ["разрешено добавлять сообщения", "разрешено банить пользователей"]
+class Privileges:
+    def __init__(self):
+        self.privileges = ["разрешено добавлять сообщения", "разрешено банить пользователей"]
+
+    def show_privileges(self):
+        print(self.privileges)
+
+
+if __name__ == '__main__':
+    a = Admin('konstantin', 'nasakin', 'blabla@mail.ru')
+    a.privileges.show_privileges()

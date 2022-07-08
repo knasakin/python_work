@@ -1,14 +1,12 @@
 # 9.7. Администратор
 from ex_9_3 import User
+from ex_9_8 import Privileges
 
 
 class Admin(User):
-    def __init__(self, first_name, last_name, privileges=None, *args, **kwargs):
-        if privileges is None:
-            privileges = []
-
+    def __init__(self, first_name, last_name, *args, **kwargs):
         super().__init__(first_name, last_name, *args, **kwargs)
-        self.privileges = privileges
+        self.privileges = Privileges()
 
     def show_privileges(self):
         print(self.privileges)
