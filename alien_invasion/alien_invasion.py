@@ -78,6 +78,7 @@ class AlienInvasion:
             self.stats.game_active = True
             self.score_board.prep_score()
             self.score_board.prep_level()
+            self.score_board.prep_ships()
 
             # Очистка списков пришельцев и снарядов.
             self.aliens.empty()
@@ -221,6 +222,7 @@ class AlienInvasion:
 
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1  # Уменьшение ships_left
+            self.score_board.prep_ships()  # обновление панели счета
             self.aliens.empty()  # Очистка списка пришельцев
             self.bullets.empty()  # Очистка списка снарядов
             self._create_fleet()   # Создание нового флота
@@ -260,6 +262,6 @@ class AlienInvasion:
 
 
 if __name__ == '__main__':
-    # Создание экземпляра и запуск игры.
+    # Создание экземпляра и запуск игры
     ai = AlienInvasion()
     ai.run_game()
