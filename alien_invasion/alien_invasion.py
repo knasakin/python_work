@@ -1,5 +1,7 @@
 import sys
 import pygame
+import csv
+from datetime import datetime
 from time import sleep
 from settings import Settings
 from ship import Ship
@@ -140,7 +142,7 @@ class AlienInvasion:
 
         # Проверка коллизий "снаряд корабля — пришелец"
         # groupcollide - возвращает словарь со снарядами и пришельцами
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, False, True)
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
         if collisions:
             for aliens in collisions.values():
@@ -217,21 +219,6 @@ class AlienInvasion:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
-    def _ship_hit(self):
-        """Обрабатывает столкновение корабля с пришельцем."""
-
-        if self.stats.ships_left > 0:
-            self.stats.ships_left -= 1  # Уменьшение ships_left
-            self.score_board.prep_ships()  # обновление панели счета
-            self.aliens.empty()  # Очистка списка пришельцев
-            self.bullets.empty()  # Очистка списка снарядов
-            self._create_fleet()   # Создание нового флота
-            self.ship.center_ship()  # размещение корабля в центре
-            sleep(0.5)
-        else:
-            self.stats.game_active = False
-            pygame.mouse.set_visible(True)
-
     def _check_aliens_bottom(self):
         """Проверяет, добрались ли пришельцы до нижнего края экрана."""
 
@@ -259,6 +246,67 @@ class AlienInvasion:
             self.play_button.draw_button()
 
         pygame.display.flip()
+
+    def write_first_record(self, score):
+        """Записывает первый рекорд в файл"""
+
+        with open('records.csv', mode='a') as file:
+            current_datetime = datetime.now()
+            fieldnames = ['Points', 'Datetime']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerow({'Points': score, 'Datetime': current_datetime})
+
+    def write_other_records(self, score):
+        """Дозаписывает остальные рекорды"""
+
+        with open('records.csv', mode='a') as file:
+            current_datetime = datetime.now()
+            writer = csv.writer(file)
+            writer.writerow([score, current_datetime])
+
+    def csvfile_existence_check(self):
+        """Проверяет наличие файла records.csv"""
+        try:
+            with open('records.csv'):
+                pass
+        except FileNotFoundError:
+            return False
+        else:
+            return True
+
+    def read_csv(self, score):
+        """Возвращает True если такой рекорд(score) уже есть в файле, иначе False"""
+
+        with open('records.csv') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['Points'] == str(score):
+                    return True
+            return False
+
+    def _ship_hit(self):
+        """Обрабатывает столкновение корабля с пришельцем."""
+
+        if self.stats.ships_left > 0:
+            self.stats.ships_left -= 1  # Уменьшение ships_left
+            self.score_board.prep_ships()  # обновление панели счета
+            self.aliens.empty()  # Очистка списка пришельцев
+            self.bullets.empty()  # Очистка списка снарядов
+            self._create_fleet()   # Создание нового флота
+            self.ship.center_ship()  # размещение корабля в центре
+            sleep(0.5)
+        else:
+            if not self.csvfile_existence_check() and self.stats.high_score > 0:
+                self.write_first_record(self.stats.high_score)
+                print('сработал csvfile_existence_check')
+            else:
+                if not self.read_csv(self.stats.high_score):
+                    self.write_other_records(self.stats.high_score)
+                    print('сработал read_csv')
+
+            self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ class Settings:
 
         # Параметры корабля
         self.ship_speed = 1.5
-        self.ship_limit = 2
+        self.ship_limit = 0
 
         # Параметры снаряда
         self.bullet_speed = 2
@@ -36,7 +36,7 @@ class Settings:
 
         self.ship_speed = 1.5
         self.bullet_speed = 3
-        self.alien_speed = 0.5
+        self.alien_speed = 5
         self.fleet_direction = 1
         self.alien_points = 50
 
