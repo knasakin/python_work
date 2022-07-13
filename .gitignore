@@ -1,1 +1,8 @@
 .idea/
+__pycache__/
+/django_project/learning_log/db.sqlite3
+/pizzeria/db.sqlite3
+/meal_planner/db.sqlite3
+/django_project/learning_log/learning_log/env_vars.py
+/pizzeria/pizzeria/env_vars.py
+/meal_planner/meal_planner/env_vars.py
