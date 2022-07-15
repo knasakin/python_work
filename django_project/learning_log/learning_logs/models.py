@@ -8,7 +8,7 @@ class Topic(models.Model):
     text = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)  # внешний ключ к таблице User
+    owner = models.ForeignKey(User, default=1, on_delete=models.CASCADE)  # внешний ключ к таблице User
 
     def __str__(self):
         """Возвращает строковое представление модели."""
