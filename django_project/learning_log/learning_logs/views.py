@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .forms import TopicForm, EntryForm
 from .models import *
 
@@ -9,6 +10,7 @@ def index(request):
     return render(request, 'learning_logs/index.html')
 
 
+@login_required
 def render_topics(request):
     """Выводит список тем."""
 
@@ -18,6 +20,7 @@ def render_topics(request):
     return render(request, 'learning_logs/topics.html', context=context)
 
 
+@login_required
 def render_topic(request, topic_id):
     """Выводит одну тему и все ее записи."""
 
@@ -28,6 +31,7 @@ def render_topic(request, topic_id):
     return render(request, 'learning_logs/topic.html', context=context)
 
 
+@login_required
 def render_new_topic(request):
     """Определяет новую тему."""
 
@@ -46,6 +50,7 @@ def render_new_topic(request):
     return render(request, 'learning_logs/new_topic.html', context=context)
 
 
+@login_required
 def render_new_entry(request, topic_id):
     """Добавляет новую запись по конкретной теме."""
 
@@ -68,6 +73,7 @@ def render_new_entry(request, topic_id):
     return render(request, 'learning_logs/new_entry.html', context=context)
 
 
+@login_required
 def edit_entry(request, entry_id):
     """Редактирует существующую запись."""
 

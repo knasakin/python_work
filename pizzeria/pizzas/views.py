@@ -5,7 +5,7 @@ from .models import *
 def index(request):
     """Домашняя страница приложения Pizzeria"""
 
-    return render(request, 'pizzas/index.html')
+    return render(request, 'pizzas/posts.html')
 
 
 def render_pizzas(request):

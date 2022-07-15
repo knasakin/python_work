@@ -3,4 +3,4 @@ from .models import *
 
 
 def index(request):
-    return render(request, 'meal_plans/index.html')
+    return render(request, 'meal_plans/posts.html')
